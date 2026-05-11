@@ -1,118 +1,106 @@
-🧠 Reinforcement Learning Foundations: CartPole Agent
-Overview
-This project demonstrates the fundamental concepts of Reinforcement Learning (RL) by training an agent to balance a pole in the classic CartPole‑v1 environment. The project compares a random agent against a Q‑Learning agent, highlighting how learning from reward feedback leads to performance improvement over time.
-The lab provides hands‑on experience with the RL feedback loop—state, action, reward, and policy update—and connects these ideas to modern AI systems trained using Reinforcement Learning from Human Feedback (RLHF).
+# 🧠 Reinforcement Learning Foundations: CartPole Agent
 
-Learning Objectives
+[![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![Gymnasium](https://img.shields.io/badge/Environment-Gymnasium-00bbff?style=flat-square)](https://gymnasium.farama.org/)
+[![RL](https://img.shields.io/badge/Algorithm-Q--Learning-orange?style=flat-square)](https://en.wikipedia.org/wiki/Q-learning)
 
-Understand the core reinforcement learning loop
-Observe the contrast between random behavior and learned policies
-Implement a tabular Q‑Learning agent with discretized state space
-Analyze training dynamics, exploration vs. exploitation, and learning curves
-Connect classical RL concepts to large language models and agent design
+## 📌 Overview
+This project demonstrates the fundamental concepts of **Reinforcement Learning (RL)** by training an agent to balance a pole in the classic `CartPole-v1` environment. The project compares a **Random Agent** (baseline) against a **Q-Learning Agent**, highlighting how learning from reward feedback leads to significant performance improvement over time.
 
+This lab provides hands-on experience with the RL feedback loop—**state, action, reward, and policy update**—and connects these ideas to modern AI systems trained using Reinforcement Learning from Human Feedback (RLHF).
 
-Environment
-CartPole‑v1 (Gymnasium)
-State Space
+---
+
+## 🎯 Learning Objectives
+*   **Understand** the core reinforcement learning loop.
+*   **Observe** the contrast between random behavior and learned policies.
+*   **Implement** a tabular Q-Learning agent with a discretized state space.
+*   **Analyze** training dynamics, exploration vs. exploitation, and learning curves.
+*   **Connect** classical RL concepts to Large Language Models (LLMs) and modern agent design.
+
+---
+
+## 🕹️ Environment: CartPole-v1 (Gymnasium)
+The goal is to keep a pole balanced upright by moving a cart left or right.
+
+### State Space
 The agent observes four continuous variables:
+1.  **Cart Position**
+2.  **Cart Velocity**
+3.  **Pole Angle**
+4.  **Pole Angular Velocity**
 
-Cart position
-Cart velocity
-Pole angle
-Pole angular velocity
+### Action Space
+*   `0`: Push cart left
+*   `1`: Push cart right
 
-Action Space
+### Reward System
+*   **+1 reward** for every time step the pole remains upright.
+*   **Max Score:** 500 per episode.
 
-0: Push cart left
-1: Push cart right
+---
 
-Reward
+## 🧪 Project Structure
 
-+1 reward for each time step the pole remains upright
-Maximum score per episode: 500
+### Part 1: Random Agent (Baseline)
+*   The agent selects actions randomly.
+*   **Key Observation:** Without learning, the agent fails almost immediately.
+*   **Average Score:** ~20.
 
+### Part 2: Q-Learning Agent
+*   **Algorithm:** Implements a tabular Q-Learning algorithm.
+*   **Discretization:** Since the state space is continuous, the agent maps observations into "bins" to create a manageable Q-table.
+*   **Policy:** Uses **Epsilon-Greedy** exploration (ε) with decay over 500 episodes.
+*   **Average Score (Last 50 episodes):** ~108 (Clear performance jump).
 
-Project Structure
-Part 1: Random Agent (Baseline)
+### 📈 Exploration Rate (ε) Experiment
+I compared three different epsilon decay schedules to find the optimal balance between **Exploration** (trying new things) and **Exploitation** (using what was learned):
 
-The agent selects actions randomly
-Results in short episode durations and low average scores
-Establishes a baseline for comparison
+| Decay Rate | Behavior | Result |
+| :--- | :--- | :--- |
+| **0.990** | Fast Decay | Premature convergence; stopped learning too early. |
+| **0.995** | **Original** | **Best Balance;** achieved consistent improvement. |
+| **0.999** | Slow Decay | Too much exploration; prevented consistent learning. |
 
-Key Observation:
-Without learning, the agent fails almost immediately, with average scores around ~20.
+---
 
-Part 2: Q‑Learning Agent
+## 📊 Key Visualizations
+The notebook generates plots that demonstrate:
+1.  **Episode Score vs. Training Time:** Shows the volatile nature of RL.
+2.  **Rolling Average Learning Curve:** Smoothes the scores to show the upward trend of the learned policy.
+3.  **Epsilon Decay:** Visualizes how the agent shifts from random actions to smart actions over time.
 
-Implements a tabular Q‑Learning algorithm
-Discretizes the continuous state space into bins
-Uses epsilon‑greedy exploration with decay over time
-Trained for 500 episodes
+---
 
-Key Concepts:
+## 💡 Reflection & AI Insights
+This project reinforces several core principles used in modern AI:
+*   **Reward Design:** The reward signal defines behavior. Poorly designed rewards lead to misaligned outcomes.
+*   **Strategy:** Exploration is essential early on, but exploitation is critical for stability.
+*   **RLHF Connection:** These principles are the foundation for training models like ChatGPT via Reinforcement Learning from Human Feedback (RLHF), where the model learns to align with human preferences through a reward model.
 
-Exploration vs. exploitation tradeoff
-Reward‑driven policy improvement
-Learning curves and convergence behavior
+---
 
-Results:
+## 🛠️ Technologies Used
+*   **Python**
+*   **Gymnasium** (formerly OpenAI Gym)
+*   **NumPy** (Data processing and Q-table math)
+*   **Matplotlib** (Visualization)
+*   **Jupyter / Google Colab**
 
-Random agent average score: ~18
-Q‑Learning agent (last 50 episodes): ~108
-Clear performance improvement over baseline
+---
 
+## 🚀 How to Run
+1.  Open the `.ipynb` file in **Google Colab** or **Jupyter Notebook**.
+2.  Install the required dependencies:
+    ```bash
+    pip install gymnasium matplotlib numpy
+    ```
+3.  Run all cells sequentially.
+4.  Review the printed outputs and the final performance plots.
 
-Exploration Rate Experiment
-Three agents were compared:
+---
 
-Fast epsilon decay (ε = 0.990)
-Original decay (ε = 0.995)
-Slow decay (ε = 0.999)
-
-Outcome:
-The original decay schedule achieved the best balance.
-Too little exploration led to premature convergence, while too much exploration prevented consistent learning.
-
-Key Visualizations
-
-Episode score vs. training time
-Rolling average learning curve
-Epsilon (exploration rate) decay
-Comparative performance of different decay strategies
-
-These plots visually demonstrate how learning emerges over time.
-
-Reflection & AI Agent Design Insights
-This project reinforces that:
-
-The reward signal defines agent behavior
-Poorly designed rewards can lead to misaligned or exploitable outcomes
-Exploration is essential early on, but exploitation is critical later
-Classical RL concepts directly map to RLHF, which is used to train modern LLMs
-
-Understanding these principles is foundational for designing reliable, goal‑aligned AI agents—even when using high‑level frameworks or APIs.
-
-Technologies Used
-
-Python
-Gymnasium
-NumPy
-Matplotlib
-Jupyter / Google Colab
-
-
-How to Run
-
-Open the notebook in Google Colab or Jupyter
-Install dependencies:
-Shellpip install gymnasium matplotlib numpyShow more lines
-
-Run all cells sequentially
-Review printed outputs and generated plots
-
-
-Author
-Andres Daza Catano
-Houston Community College
-Spring 2026
+## 👤 Author
+**Andres Daza Catano**  
+Houston Community College  
+*Spring 2026*
